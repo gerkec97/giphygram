@@ -1,4 +1,4 @@
-const version = '1.5'
+const version = '1.6'
 const appAssets = [
   'index.html',
   'main.js',
