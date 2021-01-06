@@ -1,4 +1,4 @@
-const version = '1.4'
+const version = '1.5'
 const appAssets = [
   'index.html',
   'main.js',
@@ -36,10 +36,10 @@ const staticCache = (req, cacheName = `static-${version}`) => {
     if (cachedResponse) return cachedResponse
 
     return fetch(req).then(networkResponse => {
-      caches.open(cacheName).then(cache => {
-        cache.put(req, networkResponse.clone())
-        return networkResponse
-      })
+      caches.open(cacheName)
+        .then(cache => cache.put(req, networkResponse))
+
+        return networkResponse.clone()
     })
   })
 }
@@ -50,7 +50,8 @@ const fallbackCache = (req) => {
 
     if (!networkResponse.ok) throw 'Fetch Error'
 
-    caches.open(`static-${version}`).then(cache => cache.put(req, networkResponse))
+    caches.open(`static-${version}`)
+      .then(cache => cache.put(req,  networkResponse))
 
     return networkResponse.clone()
   }).catch(err => caches.match(req))
@@ -72,7 +73,7 @@ self.addEventListener('fetch', e => {
   // App Shell resources only
   if (e.request.url.match(location.origin)) {
     e.respondWith(staticCache(e.request))
-  } else if (e.request.url.match('https://api.giphy.com/v1/gifs/trending')) {
+  } else if (e.request.url.match('api.giphy.com/v1/gifs/trending')) {
     e.respondWith(fallbackCache(e.request))
   } else if (e.request.url.match('giphy.com/media')) {
     e.respondWith(staticCache(e.request, 'giphy-media'))
