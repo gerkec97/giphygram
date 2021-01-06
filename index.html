@@ -42,7 +42,7 @@
             .spinner {
                 animation-name: spin;
                 animation-duration: 2000ms;
-                animation-iteration-count: infinite; 
+                animation-iteration-count: infinite;
                 animation-timing-function: linear;
             }
             @keyframes spin {
@@ -50,6 +50,7 @@
                 to {transform:rotate(360deg); }
             }
         </style>
+        <meta name="theme-color" content="#1b9aff">
 
     </head>
 
@@ -77,6 +78,12 @@
 
             <!-- Giphys -->
             <div id="giphys" class="row no-gutters"></div>
+            <noscript>
+                <div class="text-center mt-5">
+                    Giphygram requires Javascript to function properly.<br />
+                    <small>Please enable Javascript in your browser</small>
+                </div>
+            </noscript>
 
         </main>
     </body>
